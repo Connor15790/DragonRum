@@ -10,8 +10,7 @@ export async function POST(req) {
     try {
         await dbConnect();
 
-        const body = await req.json();
-        const { email, password } = body;
+        const { email, password } = await req.json();
 
         const user = await User.findOne({ email });
 

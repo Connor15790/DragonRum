@@ -10,8 +10,7 @@ export async function POST(req) {
     try {
         await dbConnect();
 
-        const body = await req.json();
-        const { name, email, password } = body;
+        const { name, email, password } = await req.json();
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
