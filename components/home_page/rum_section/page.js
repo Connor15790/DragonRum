@@ -4,7 +4,7 @@ import TiltedCard from "@/components/cards/TiltedCard/page";
 
 export default function RumSection({ products }) {
     return (
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
             <p
                 className="font-serif font-bold text-2xl"
                 onClick={() => console.log(products)}
@@ -12,10 +12,10 @@ export default function RumSection({ products }) {
                 Rum
             </p>
 
-            <div className="w-full overflow-x-auto">
+            <div className="w-full overflow-x-auto px-5">
                 <div className="flex gap-8 py-4 overflow-visible">
                     {products.map((product) => (
-                        <div key={product._id} className="flex-shrink-0 overflow-visible">
+                        <div key={product._id} className="flex-shrink-0 cursor-pointer overflow-visible">
                             <TiltedCard
                                 key={product._id}
                                 imageSrc={product.img}
