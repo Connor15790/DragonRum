@@ -17,29 +17,44 @@ async function getProducts() {
 export default async function Home() {
 	const products = await getProducts();
 
+	const getBatch = (startIndex) => {
+		const batchSize = 6;
+		const result = [];
+
+		for (let i = 0; i < batchSize; i++) {
+			// The % operator makes it loop back to 0 when it hits 10
+			const index = (startIndex + i) % products.length;
+			result.push(products[index]);
+		}
+		return result;
+	};
+
 	const stackData = [
 		{
 			id: 1,
+			pageNumber: "01",
 			bg: "/sugarcane.jpg",
-			products: products.slice(0, 6) // First 6 rums
+			products: getBatch(0)
 		},
 		{
 			id: 2,
-			bg: "/sugarcane.jpg", // Example of a different background
-			products: products.slice(0, 6).reverse() // Just reversing for variety
+			pageNumber: "02",
+			bg: "/sugarcane_dark.jpg",
+			products: getBatch(6)
 		},
 		{
 			id: 3,
-			bg: "/sugarcane.jpg", // Example of a different background
-			products: products.slice(0, 6) // Just reversing for variety
-		},
+			pageNumber: "03",
+			bg: "/sugarcane.jpg",
+			products: getBatch(2)
+		}
 	];
 
 	return (
 		<div className="w-full flex justify-center px-5 sm:px-16 py-5 sm:py-10">
-			<div className="bg-white/10 rounded-lg w-full px-6 md:px-16 lg:px-20 py-5 flex flex-col">
+			<div className="bg-white/10 rounded-lg w-full justify-center items-center px-6 md:px-16 lg:px-20 py-5 flex flex-col">
 				<div className="flex flex-col md:flex-row items-center gap-5 md:gap-20 px-0 md:px-10">
-					<div className="w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-96 lg:h-96 flex-shrink-0">
+					<div className="w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-96 lg:h-96 shrink-0">
 						<img src="/rum_bottle.png" alt="" className="object-contain w-full h-full" />
 					</div>
 
@@ -59,15 +74,13 @@ export default async function Home() {
 					</div>
 				</div>
 
-				<div className="mt-5 mb-3 flex justify-center">
+				<div className="mt-5 mb-0 flex justify-center">
 					<p className="text-2xl md:text-3xl lg:text-4xl font-serif">Rums</p>
 				</div>
 
-				<div className="flex justify-center items-center py-10 overflow-hidden">
+				<div className="flex w-[320] p-10 h-[250px] md:w-[600px] md:h-[400px] lg:w-[800px] lg:h-[500px] relative justify-center items-center py-3 overflow-hidden">
 					<SugarcaneStack
 						cardsData={stackData}
-						// Adjust dimensions to fit your design
-						cardDimensions={{ width: 800, height: 500 }}
 					/>
 				</div>
 			</div>

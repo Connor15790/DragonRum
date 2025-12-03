@@ -21,7 +21,8 @@ export default function SugarcaneLayout({ bg, products }) {
             {positions.map((pos, index) => (
                 <DanglingImage
                     key={index}
-                    src={products[index]?.image || "/Rum_1.png"}
+                    product={products[index]}
+                    src={products[index]?.img || "/Rum_1.png"}
                     className="absolute cursor-pointer hover:scale-110 transition-transform duration-300 ease-out"
                     style={{
                         width: "15%",
@@ -31,72 +32,6 @@ export default function SugarcaneLayout({ bg, products }) {
                     }}
                 />
             ))}
-
-            {/* <DanglingImage
-                src="/Rum_1.png"
-                className="absolute cursor-pointer hover:scale-110 transition-transform duration-300 ease-out"
-                style={{
-                    width: "15%",
-                    top: "66%",
-                    left: "4%",
-                    transform: "translate(-50%, -50%)",
-                }}
-            />
-
-            <DanglingImage
-                src="/Rum_2.png"
-                className="absolute cursor-pointer hover:scale-110 transition-transform duration-300 ease-out"
-                style={{
-                    width: "15%",
-                    top: "17%",
-                    left: "9.5%",
-                    transform: "translate(-50%, -50%)",
-                }}
-            />
-
-            <DanglingImage
-                src="/Rum_3.png"
-                className="absolute cursor-pointer hover:scale-110 transition-transform duration-300 ease-out"
-                style={{
-                    width: "15%",
-                    top: "11%",
-                    left: "29%",
-                    transform: "translate(-50%, -50%)",
-                }}
-            />
-
-            <DanglingImage
-                src="/Rum_4.png"
-                className="absolute cursor-pointer hover:scale-110 transition-transform duration-300 ease-out"
-                style={{
-                    width: "15%",
-                    top: "3%",
-                    left: "46%",
-                    transform: "translate(-50%, -50%)",
-                }}
-            />
-
-            <DanglingImage
-                src="/Rum_1.png"
-                className="absolute cursor-pointer hover:scale-110 transition-transform duration-300 ease-out"
-                style={{
-                    width: "15%",
-                    top: "34%",
-                    left: "60.5%",
-                    transform: "translate(-50%, -50%)",
-                }}
-            />
-
-            <DanglingImage
-                src="/Rum_2.png"
-                className="absolute cursor-pointer hover:scale-110 transition-transform duration-300 ease-out"
-                style={{
-                    width: "15%",
-                    top: "17%",
-                    left: "75.5%",
-                    transform: "translate(-50%, -50%)",
-                }}
-            /> */}
         </div>
     );
 }
