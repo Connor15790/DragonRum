@@ -1,10 +1,10 @@
 import DanglingImage from "@/components/dangling_images/page";
 import RumSection from "@/components/home_page/rum_section/page";
-import SugarcaneLayout from "@/components/home_page/sugarcane_layout/page";
-import SugarcaneStack from "@/components/sugarcane_stack/page";
+import SugarcaneLayout from "@/components/home_page/drink_layout/page";
+import DrinkStack from "@/components/drink_stack/page";
 
 async function getProducts() {
-	const res = await fetch("http://localhost:3000/api/product/get-products?category=rum", {
+	const res = await fetch("http://localhost:3000/api/product/get-products", {
 		cache: "no-store",
 	});
 
@@ -17,7 +17,7 @@ async function getProducts() {
 export default async function Home() {
 	const products = await getProducts();
 
-	const getBatch = (startIndex) => {
+	const getBatch = (startIndex, products) => {
 		const batchSize = 6;
 		const result = [];
 
@@ -29,24 +29,93 @@ export default async function Home() {
 		return result;
 	};
 
-	const stackData = [
+	const rumStackData = [
 		{
 			id: 1,
 			pageNumber: "01",
 			bg: "/sugarcane.jpg",
-			products: getBatch(0)
+			products: getBatch(0, products.filter((p) => p.category === "rum")),
+			positions: [
+				{ top: "66%", left: "4%" },
+				{ top: "17%", left: "9.5%" },
+				{ top: "11%", left: "29%" },
+				{ top: "3%", left: "46%" },
+				{ top: "34%", left: "60.5%" },
+				{ top: "17%", left: "75.5%" },
+			]
 		},
 		{
 			id: 2,
 			pageNumber: "02",
-			bg: "/sugarcane_dark.jpg",
-			products: getBatch(6)
+			bg: "/sugarcane.jpg",
+			products: getBatch(6, products.filter((p) => p.category === "rum")),
+			positions: [
+				{ top: "66%", left: "4%" },
+				{ top: "17%", left: "9.5%" },
+				{ top: "11%", left: "29%" },
+				{ top: "3%", left: "46%" },
+				{ top: "34%", left: "60.5%" },
+				{ top: "17%", left: "75.5%" },
+			]
 		},
 		{
 			id: 3,
 			pageNumber: "03",
 			bg: "/sugarcane.jpg",
-			products: getBatch(2)
+			products: getBatch(2, products.filter((p) => p.category === "rum")),
+			positions: [
+				{ top: "66%", left: "4%" },
+				{ top: "17%", left: "9.5%" },
+				{ top: "11%", left: "29%" },
+				{ top: "3%", left: "46%" },
+				{ top: "34%", left: "60.5%" },
+				{ top: "17%", left: "75.5%" },
+			]
+		}
+	];
+
+	const whiskeyStackData = [
+		{
+			id: 1,
+			pageNumber: "01",
+			bg: "/wheat.jpg",
+			products: getBatch(0, products.filter((p) => p.category === "whiskey")),
+			positions: [
+				{ top: "44%", left: "1%" },
+				{ top: "55%", left: "17%" },
+				{ top: "26%", left: "33%" },
+				{ top: "36%", left: "55%" },
+				{ top: "42%", left: "70%" },
+				{ top: "46%", left: "86%" },
+			]
+		},
+		{
+			id: 2,
+			pageNumber: "02",
+			bg: "/wheat.jpg",
+			products: getBatch(6, products.filter((p) => p.category === "whiskey")),
+			positions: [
+				{ top: "44%", left: "1%" },
+				{ top: "55%", left: "17%" },
+				{ top: "26%", left: "33%" },
+				{ top: "36%", left: "55%" },
+				{ top: "42%", left: "70%" },
+				{ top: "46%", left: "86%" },
+			]
+		},
+		{
+			id: 3,
+			pageNumber: "03",
+			bg: "/wheat.jpg",
+			products: getBatch(2, products.filter((p) => p.category === "whiskey")),
+			positions: [
+				{ top: "44%", left: "1%" },
+				{ top: "55%", left: "17%" },
+				{ top: "26%", left: "33%" },
+				{ top: "36%", left: "55%" },
+				{ top: "42%", left: "70%" },
+				{ top: "46%", left: "86%" },
+			]
 		}
 	];
 
@@ -79,8 +148,18 @@ export default async function Home() {
 				</div>
 
 				<div className="flex w-[320] p-10 h-[250px] md:w-[600px] md:h-[400px] lg:w-[800px] lg:h-[500px] relative justify-center items-center py-3 overflow-hidden">
-					<SugarcaneStack
-						cardsData={stackData}
+					<DrinkStack
+						cardsData={rumStackData}
+					/>
+				</div>
+
+				<div className="mt-10 mb-0 flex justify-center">
+					<p className="text-2xl md:text-3xl lg:text-4xl font-serif">Whiskeys</p>
+				</div>
+
+				<div className="flex w-[320] p-10 h-[250px] md:w-[600px] md:h-[400px] lg:w-[800px] lg:h-[500px] relative justify-center items-center py-3 overflow-hidden">
+					<DrinkStack
+						cardsData={whiskeyStackData}
 					/>
 				</div>
 			</div>

@@ -1,10 +1,9 @@
-// components/SugarcaneStack.jsx
 'use client';
 import { motion, useMotionValue, useTransform } from 'motion/react';
 import { useState } from 'react';
-import SugarcaneLayout from '@/components/home_page/sugarcane_layout/page';
+import DrinkLayout from '@/components/home_page/drink_layout/page';
 
-function CardRotate({ children, onSendToBack, onSwipeLeft, onSwipeRight, sensitivity, dragEnabled }) {
+function CardRotate({ children, onSwipeLeft, onSwipeRight, sensitivity, dragEnabled }) {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotateX = useTransform(y, [-100, 100], [60, -60]);
@@ -36,7 +35,7 @@ function CardRotate({ children, onSendToBack, onSwipeLeft, onSwipeRight, sensiti
     );
 }
 
-export default function SugarcaneStack({
+export default function DrinkStack({
     sensitivity = 200,
     cardsData = [],
     animationConfig = { stiffness: 260, damping: 20 },
@@ -105,7 +104,7 @@ export default function SugarcaneStack({
                             }}
                         >
                             <div className="grow relative rounded-xl overflow-hidden">
-                                <SugarcaneLayout bg={card.bg} products={card.products} />
+                                <DrinkLayout bg={card.bg} products={card.products} positions={card.positions} />
                             </div>
 
                             <div className="text-center pt-3 font-serif text-gray-700">

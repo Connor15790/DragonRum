@@ -1,19 +1,19 @@
 import DanglingImage from "@/components/dangling_images/page";
 
-export default function SugarcaneLayout({ bg, products }) {
-    const positions = [
-        { top: "66%", left: "4%" },
-        { top: "17%", left: "9.5%" },
-        { top: "11%", left: "29%" },
-        { top: "3%", left: "46%" },
-        { top: "34%", left: "60.5%" },
-        { top: "17%", left: "75.5%" },
-    ];
+export default function DrinkLayout({ bg, products, positions }) {
+    // const positions = [
+    //     { top: "44%", left: "1%" },
+    //     { top: "55%", left: "17%" },
+    //     { top: "26%", left: "33%" },
+    //     { top: "36%", left: "55%" },
+    //     { top: "42%", left: "70%" },
+    //     { top: "46%", left: "86%" },
+    // ];
 
     return (
         <div className="relative mx-auto w-full max-w-3xl">
             <img
-                src="/sugarcane.jpg"
+                src={bg}
                 className="rounded-md w-full h-auto"
                 alt=""
             />
