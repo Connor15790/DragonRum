@@ -1,6 +1,3 @@
-import DanglingImage from "@/components/dangling_images/page";
-import RumSection from "@/components/home_page/rum_section/page";
-import SugarcaneLayout from "@/components/home_page/drink_layout/page";
 import DrinkStack from "@/components/drink_stack/page";
 
 async function getProducts() {
