@@ -2,12 +2,12 @@ import DanglingImage from "@/components/dangling_images/page";
 
 export default function DrinkLayout({ bg, products, positions }) {
     // const positions = [
-    //     { top: "44%", left: "1%" },
-    //     { top: "55%", left: "17%" },
-    //     { top: "26%", left: "33%" },
-    //     { top: "36%", left: "55%" },
-    //     { top: "42%", left: "70%" },
-    //     { top: "46%", left: "86%" },
+    //     { top: "36%", left: "17%" },
+    //     { top: "37%", left: "27%" },
+    //     { top: "36%", left: "36.5%" },
+    //     { top: "36%", left: "48.5%" },
+    //     { top: "36%", left: "58%" },
+    //     { top: "37%", left: "67.5%" },
     // ];
 
     return (

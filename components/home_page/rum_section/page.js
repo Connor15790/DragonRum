@@ -15,7 +15,7 @@ export default function RumSection({ products }) {
             <div className="w-full overflow-x-auto px-5">
                 <div className="flex gap-8 py-4 overflow-visible">
                     {products.map((product) => (
-                        <div key={product._id} className="flex-shrink-0 cursor-pointer overflow-visible">
+                        <div key={product._id} className="shrink-0 cursor-pointer overflow-visible">
                             <TiltedCard
                                 key={product._id}
                                 imageSrc={product.img}

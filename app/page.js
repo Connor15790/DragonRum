@@ -1,6 +1,3 @@
-import DanglingImage from "@/components/dangling_images/page";
-import RumSection from "@/components/home_page/rum_section/page";
-import SugarcaneLayout from "@/components/home_page/drink_layout/page";
 import DrinkStack from "@/components/drink_stack/page";
 
 async function getProducts() {
@@ -119,6 +116,51 @@ export default async function Home() {
 		}
 	];
 
+	const wineStackData = [
+		{
+			id: 1,
+			pageNumber: "01",
+			bg: "/grapes.jpg",
+			products: getBatch(0, products.filter((p) => p.category === "wine")),
+			positions: [
+				{ top: "36%", left: "17%" },
+				{ top: "37%", left: "27%" },
+				{ top: "36%", left: "36.5%" },
+				{ top: "36%", left: "48.5%" },
+				{ top: "36%", left: "58%" },
+				{ top: "37%", left: "67.5%" },
+			]
+		},
+		{
+			id: 2,
+			pageNumber: "02",
+			bg: "/grapes.jpg",
+			products: getBatch(6, products.filter((p) => p.category === "wine")),
+			positions: [
+				{ top: "36%", left: "17%" },
+				{ top: "37%", left: "27%" },
+				{ top: "36%", left: "36.5%" },
+				{ top: "36%", left: "48.5%" },
+				{ top: "36%", left: "58%" },
+				{ top: "37%", left: "67.5%" },
+			]
+		},
+		{
+			id: 3,
+			pageNumber: "03",
+			bg: "/grapes.jpg",
+			products: getBatch(2, products.filter((p) => p.category === "wine")),
+			positions: [
+				{ top: "36%", left: "17%" },
+				{ top: "37%", left: "27%" },
+				{ top: "36%", left: "36.5%" },
+				{ top: "36%", left: "48.5%" },
+				{ top: "36%", left: "58%" },
+				{ top: "37%", left: "67.5%" },
+			]
+		}
+	];
+
 	return (
 		<div className="w-full flex justify-center px-5 sm:px-16 py-5 sm:py-10">
 			<div className="bg-white/10 rounded-lg w-full justify-center items-center px-6 md:px-16 lg:px-20 py-5 flex flex-col">
@@ -160,6 +202,16 @@ export default async function Home() {
 				<div className="flex w-[320] p-10 h-[250px] md:w-[600px] md:h-[400px] lg:w-[800px] lg:h-[500px] relative justify-center items-center py-3 overflow-hidden">
 					<DrinkStack
 						cardsData={whiskeyStackData}
+					/>
+				</div>
+
+				<div className="mt-10 mb-0 flex justify-center">
+					<p className="text-2xl md:text-3xl lg:text-4xl font-serif">Wines</p>
+				</div>
+
+				<div className="flex w-[320] p-10 h-[250px] md:w-[600px] md:h-[400px] lg:w-[800px] lg:h-[500px] relative justify-center items-center py-3 overflow-hidden">
+					<DrinkStack
+						cardsData={wineStackData}
 					/>
 				</div>
 			</div>
