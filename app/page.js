@@ -1,4 +1,4 @@
-import DrinkStack from "@/components/drink_stack/page";
+import DrinkStack from "@/components/DrinkStack";
 
 async function getProducts() {
 	const res = await fetch("http://localhost:3000/api/product/get-products", {

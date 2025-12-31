@@ -1,7 +1,7 @@
 'use client';
 import { motion, useMotionValue, useTransform } from 'motion/react';
 import { useState } from 'react';
-import DrinkLayout from '@/components/home_page/drink_layout/page';
+import DrinkLayout from '@/components/home_page/DrinkLayout';
 
 function CardRotate({ children, onSwipeLeft, onSwipeRight, sensitivity, dragEnabled }) {
     const x = useMotionValue(0);

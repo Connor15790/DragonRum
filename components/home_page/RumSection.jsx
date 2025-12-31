@@ -1,6 +1,6 @@
 "use client";
 
-import TiltedCard from "@/components/cards/TiltedCard/page";
+import TiltedCard from "@/components/cards/TitledCard";
 
 export default function RumSection({ products }) {
     return (

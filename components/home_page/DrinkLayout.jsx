@@ -1,4 +1,4 @@
-import DanglingImage from "@/components/dangling_images/page";
+import DanglingImage from "@/components/DanglingImage";
 
 export default function DrinkLayout({ bg, products, positions }) {
     // const positions = [

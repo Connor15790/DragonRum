@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navigation/Navbar/page";
+import Navbar from "@/components/navigation/Navbar";
 import Providers from "@/redux/providers";
 
 const geistSans = Geist({
