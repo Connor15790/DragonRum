@@ -9,9 +9,13 @@ export default function ProductView({ product }) {
 
     const selectedPerson = null;
 
+    const handleAddtoCart = () => {
+
+    }
+
     return (
         <>
-            <CartDrawer open={isDrawerOpen} setOpen={setIsDrawerOpen} person={selectedPerson} />
+            <CartDrawer open={isDrawerOpen} setOpen={setIsDrawerOpen} />
 
             <div className="w-full flex justify-center px-5 sm:px-16 py-5 sm:py-10">
                 <div className="bg-white/10 rounded-lg w-full justify-center items-center px-6 md:px-16 lg:px-20 py-5 flex flex-col">
@@ -32,7 +36,7 @@ export default function ProductView({ product }) {
 
                                 {/* RIGHT DETAILS */}
                                 <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-                                    <h1 className="text-white text-3xl title-font font-medium mb-1">
+                                    <h1 onClick={() => console.log(product)} className="text-white text-3xl title-font font-medium mb-1">
                                         {product.title}
                                     </h1>
 

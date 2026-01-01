@@ -1,11 +1,18 @@
+"use client"
+
 import React, { Fragment } from 'react';
-import Image from 'next/image';
+
+import { useSelector } from 'react-redux';
 
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
-import { MinusIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import CartDrawerItem from './CartDrawerItem';
+import { XMarkIcon } from '@heroicons/react/24/outline'
 
-const CartDrawer = ({ open, setOpen, person }) => {
+import CartDrawerItem from './CartDrawerItem';
+import Spinner from '../Spinner';
+
+const CartDrawer = ({ open, setOpen }) => {
+    const { items, cartLoading, cartError } = useSelector((state) => state.cart);
+
     return (
         <Transition show={open} as={Fragment}>
             <Dialog as="div" className="relative z-110" onClose={setOpen}>
@@ -58,10 +65,24 @@ const CartDrawer = ({ open, setOpen, person }) => {
                                         </div>
 
                                         {/* Body Content */}
-                                        <div className="relative flex-1">
-                                            <CartDrawerItem />
-                                            <CartDrawerItem />
-                                        </div>
+                                        {cartLoading ?
+                                            <div className="relative items-center justify-center flex flex-1">
+                                                <Spinner />
+                                            </div> :
+                                            <div className="relative flex-1">
+                                                {items.length === 0 ? (
+                                                    <div className='h-full flex items-center justify-center'>
+                                                        <p className='text-black'>Cart is empty!</p>
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        <CartDrawerItem />
+                                                        <CartDrawerItem />
+                                                    </>
+                                                )
+                                                }
+                                            </div>
+                                        }
 
                                         {/* Footer Actions */}
                                         <div className="flex shrink-0 justify-end px-4 py-4 border-t border-gray-200">

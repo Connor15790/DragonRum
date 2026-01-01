@@ -1,13 +1,16 @@
 "use client";
 
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { store } from "./store";
 import { useEffect } from "react";
-import { loadUser } from "@/redux/AuthSlice/authSlice"; // Adjust path if needed
+import { loadUser } from "@/redux/AuthSlice/authSlice";
+import { fetchCart } from "./CartSlice/cartSlice";
 
-// 1. Create a child component that has access to the store
+// Create a child component that has access to the store
 const AuthLoader = ({ children }) => {
     const dispatch = useDispatch();
+
+    const { user } = useSelector((state) => state.auth)
 
     useEffect(() => {
         // This fetches the user data from the /api/auth/me route
@@ -15,10 +18,16 @@ const AuthLoader = ({ children }) => {
         dispatch(loadUser());
     }, [dispatch]);
 
+    useEffect(() => {
+        // Fetch cart if the user is loaded
+        if (user) {
+            dispatch(fetchCart());
+        }
+    }, [dispatch, user])
+
     return children;
 };
 
-// 2. Wrap your app with Provider -> AuthLoader -> Children
 export default function Providers({ children }) {
     return (
         <Provider store={store}>
