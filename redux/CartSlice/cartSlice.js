@@ -8,7 +8,7 @@ export const fetchCart = createAsyncThunk("product/fetchCart", async (_, thunkAP
         return response.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(
-            error.response?.data?.message || "Fetching products failed"
+            error.response?.data?.message || "Fetching products failed!"
         );
     }
 })
@@ -20,7 +20,19 @@ export const addtoCart = createAsyncThunk("product/addtoCart", async (productDat
         return response.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(
-            error.response?.data?.message || "Fetching products failed"
+            error.response?.data?.message || "Fetching products failed!"
+        );
+    }
+})
+
+export const updateCart = createAsyncThunk("product/updateCart", async ({ productId, quantity }, thunkAPI) => {
+    try {
+        const response = await axios.put("/api/cart", { productId, quantity });
+
+        return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(
+            error.response?.data?.message || "Updating product failed!"
         );
     }
 })
@@ -30,10 +42,23 @@ const cartSlice = createSlice({
     initialState: {
         items: [],
         totalPrice: 0,
-        cartLoading: false,
-        cartError: null
+        isCartOpen: false,
+        // Fetch States
+        cartLoadingFetch: false,
+        cartErrorFetch: null,
+
+        // Add States
+        cartLoadingAdd: false,
+        cartErrorAdd: null,
+
+        // Update/Remove States
+        cartLoadingUpdate: false,
+        cartErrorUpdate: null
     },
     reducers: {
+        setCartOpen: (state, action) => {
+            state.isCartOpen = action.payload;
+        },
         clearCartLocal: (state) => {
             state.items = [];
             state.totalPrice = 0;
@@ -43,35 +68,50 @@ const cartSlice = createSlice({
         builder
             // Fetch cart
             .addCase(fetchCart.pending, (state) => {
-                state.cartLoading = true;
-                state.cartError = null;
+                state.cartLoadingFetch = true;
+                state.cartErrorFetch = null;
             })
             .addCase(fetchCart.fulfilled, (state, action) => {
-                state.cartLoading = false;
+                state.cartLoadingFetch = false;
                 state.items = action.payload.items || [];
                 state.totalPrice = action.payload.totalPrice || 0;
             })
             .addCase(fetchCart.rejected, (state, action) => {
-                state.cartLoading = false;
-                state.cartError = action.payload
+                state.cartLoadingFetch = false;
+                state.cartErrorFetch = action.payload
             })
 
             // Add to cart
             .addCase(addtoCart.pending, (state) => {
-                state.cartLoading = true;
-                state.cartError = null;
+                state.cartLoadingAdd = true;
+                state.cartErrorAdd = null;
             })
             .addCase(addtoCart.fulfilled, (state, action) => {
-                state.cartLoading = false;
+                state.cartLoadingAdd = false;
                 state.items = action.payload.items;
                 state.totalPrice = action.payload.totalPrice;
             })
             .addCase(addtoCart.rejected, (state, action) => {
-                state.cartLoading = false;
-                state.cartError = action.payload;
+                state.cartLoadingAdd = false;
+                state.cartErrorAdd = action.payload;
+            })
+
+            // Update cart items
+            .addCase(updateCart.pending, (state) => {
+                state.cartLoadingUpdate = true;
+                state.cartErrorUpdate = null;
+            })
+            .addCase(updateCart.fulfilled, (state, action) => {
+                state.cartLoadingUpdate = false;
+                state.cartErrorUpdate = action.payload.items;
+                state.totalPrice = action.payload.totalPrice;
+            })
+            .addCase(updateCart.rejected, (state, action) => {
+                state.cartLoadingUpdate = false;
+                state.cartErrorUpdate = action.payload;
             })
     }
 })
 
-export const { clearCartLocal } = cartSlice.actions;
+export const { setCartOpen, clearCartLocal } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navigation/Navbar";
 import Providers from "@/redux/providers";
+import CartDrawer from "@/components/cart/CartDrawer";
+import ToastProvider from "./providers/ToastProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +28,8 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <Navbar />
+          <CartDrawer />
+          <ToastProvider />
           {children}
         </Providers>
       </body>

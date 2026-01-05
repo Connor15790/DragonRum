@@ -1,22 +1,42 @@
 "use client";
 
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+
 import Image from "next/image";
-import CartDrawer from "@/components/cart/CartDrawer";
+
+import { useDispatch, useSelector } from "react-redux";
+import { addtoCart } from "@/redux/CartSlice/cartSlice";
+import { setCartOpen } from "@/redux/CartSlice/cartSlice";
+
+import Spinner from "@/components/Spinner";
 
 export default function ProductView({ product }) {
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const dispatch = useDispatch();
 
-    const selectedPerson = null;
+    const { cartLoadingAdd, cartErrorAdd } = useSelector((state) => state.cart);
 
-    const handleAddtoCart = () => {
+    const handleAddtoCart = async () => {
+        const cartItemData = {
+            productId: product._idedfd,
+            name: product.title,
+            price: product.price,
+            image: product.img,
+            quantity: 1
+        };
 
+        try {
+            await dispatch(addtoCart(cartItemData)).unwrap();
+
+            dispatch(setCartOpen(true));
+        } catch (error) {
+            console.error("Failed to add to cart:", error);
+            toast.error("Error saving to cart!");
+        }
     }
 
     return (
         <>
-            <CartDrawer open={isDrawerOpen} setOpen={setIsDrawerOpen} />
-
             <div className="w-full flex justify-center px-5 sm:px-16 py-5 sm:py-10">
                 <div className="bg-white/10 rounded-lg w-full justify-center items-center px-6 md:px-16 lg:px-20 py-5 flex flex-col">
                     <section className="text-gray-600 body-font overflow-hidden">
@@ -72,12 +92,13 @@ export default function ProductView({ product }) {
                                             ${product.price}
                                         </span>
 
-                                        <button onClick={() => setIsDrawerOpen(true)} className="flex ml-auto cursor-pointer text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
+                                        <button onClick={handleAddtoCart} className="flex gap-4 items-center ml-auto cursor-pointer text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
                                             Add to Cart
+
+                                            {cartLoadingAdd && <Spinner size={18} color="border-white" />}
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </section>

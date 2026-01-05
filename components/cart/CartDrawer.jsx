@@ -2,7 +2,8 @@
 
 import React, { Fragment } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCartOpen } from '@/redux/CartSlice/cartSlice';
 
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline'
@@ -11,11 +12,15 @@ import CartDrawerItem from './CartDrawerItem';
 import Spinner from '../Spinner';
 
 const CartDrawer = ({ open, setOpen }) => {
-    const { items, cartLoading, cartError } = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+
+    const { items, cartLoadingFetch, cartErrorFetch, isCartOpen } = useSelector((state) => state.cart);
+
+    const closeDrawer = () => dispatch(setCartOpen(false));
 
     return (
-        <Transition show={open} as={Fragment}>
-            <Dialog as="div" className="relative z-110" onClose={setOpen}>
+        <Transition show={isCartOpen} as={Fragment}>
+            <Dialog as="div" className="relative z-110" onClose={closeDrawer}>
                 {/* Background Backdrop */}
                 <TransitionChild
                     as={Fragment}
@@ -47,7 +52,7 @@ const CartDrawer = ({ open, setOpen }) => {
                                         {/* Header */}
                                         <div className="bg-red-500 px-4 py-6 sm:px-6">
                                             <div className="flex items-center justify-between">
-                                                <DialogTitle className="text-xl font-semibold leading-6 text-white">
+                                                <DialogTitle onClick={() => console.log(items)} className="text-xl font-semibold leading-6 text-white">
                                                     Cart
                                                 </DialogTitle>
                                                 <div className="ml-3 flex h-7 items-center">
@@ -64,8 +69,14 @@ const CartDrawer = ({ open, setOpen }) => {
                                             </div>
                                         </div>
 
+                                        {cartErrorFetch &&
+                                            <div className='relative items-center justify-center flex flex-1'>
+                                                <p className='text-black'>Error fetching cart items!</p>
+                                            </div>
+                                        }
+
                                         {/* Body Content */}
-                                        {cartLoading ?
+                                        {cartLoadingFetch ?
                                             <div className="relative items-center justify-center flex flex-1">
                                                 <Spinner />
                                             </div> :
@@ -76,8 +87,9 @@ const CartDrawer = ({ open, setOpen }) => {
                                                     </div>
                                                 ) : (
                                                     <>
-                                                        <CartDrawerItem />
-                                                        <CartDrawerItem />
+                                                        {items.map((item, index) => (
+                                                            <CartDrawerItem key={index} item={item} />
+                                                        ))}
                                                     </>
                                                 )
                                                 }

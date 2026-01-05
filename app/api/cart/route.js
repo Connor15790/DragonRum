@@ -47,33 +47,78 @@ export async function POST(req) {
         await dbConnect();
         const userId = await getUserId();
 
-        if (!user) {
-            return NextResponse.json({ message: "Unauthorized!" }, { status: 401 });
+        if (!userId) {
+            return NextResponse.json(
+                { message: "Unauthorized!" },
+                { status: 401 }
+            );
         }
 
-        const { productId, name, price, image, quantity } = await req.json();
+        const body = await req.json();
 
         let cart = await Cart.findOne({ userId });
 
         if (!cart) {
             cart = await Cart.create({
                 userId,
-                items: [{ productId, name, price, image, quantity }]
-            })
+                items: [body]
+            });
         } else {
-            const itemIndex = await cart.items.findIndex(item => item.productId.toString() === productId);
+            const itemIndex = cart.items.findIndex(
+                item => item.productId.toString() === body.productId
+            );
 
-            if (itemIndex > - 1) {
-                cart.items[itemIndex].quantity += quantity;
+            if (itemIndex > -1) {
+                cart.items[itemIndex].quantity += body.quantity;
             } else {
-                cart.items.push({ productId, name, price, image, quantity });
+                cart.items.push(body);
             }
 
             await cart.save();
         }
 
         return NextResponse.json(cart);
+
     } catch (error) {
-        return NextResponse.json({ message: "Internal server error!", error: error.message }, { status: 500 });
+        return NextResponse.json(
+            { message: "Internal server error!", error: error.message },
+            { status: 500 }
+        );
+    }
+}
+
+// Update item quantity in cart
+export async function PUT(req) {
+    try {
+        await dbConnect();
+        const userId = await getUserId();
+
+        if (!userId) {
+            return NextResponse.json(
+                { message: "Unauthorized!" },
+                { status: 401 }
+            );
+        }
+
+        const { productId, quantity } = await req.json();
+
+        const userCart = await Cart.findOne({ userId });
+
+        const itemIndex = userCart.items.findIndex(item => item.productId.toString() === productId);
+
+        if (quantity > 0) {
+            userCart.items[itemIndex].quantity += quantity;
+        } else {
+            userCart.items[itemIndex].quantity -= quantity;
+        }
+
+        await userCart.save();
+
+        return NextResponse.json(userCart);
+    } catch (error) {
+        return NextResponse.json(
+            { message: "Internal server error!", error: error.message },
+            { status: 500 }
+        );
     }
 }
