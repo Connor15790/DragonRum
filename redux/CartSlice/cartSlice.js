@@ -103,7 +103,7 @@ const cartSlice = createSlice({
             })
             .addCase(updateCart.fulfilled, (state, action) => {
                 state.cartLoadingUpdate = false;
-                state.cartErrorUpdate = action.payload.items;
+                state.items = action.payload.items;
                 state.totalPrice = action.payload.totalPrice;
             })
             .addCase(updateCart.rejected, (state, action) => {

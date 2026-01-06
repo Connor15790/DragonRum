@@ -106,16 +106,18 @@ export async function PUT(req) {
 
         const itemIndex = userCart.items.findIndex(item => item.productId.toString() === productId);
 
-        if (quantity > 0) {
-            userCart.items[itemIndex].quantity += quantity;
-        } else {
-            userCart.items[itemIndex].quantity -= quantity;
-        }
+        console.log("USER:", userId);
+        console.log("PRODUCT:", productId);
+        console.log("CART ITEMS:", userCart?.items);
+        console.log("ITEM INDEX:", itemIndex);
+
+        userCart.items[itemIndex].quantity += parseInt(quantity);
 
         await userCart.save();
 
         return NextResponse.json(userCart);
     } catch (error) {
+        console.error(error)
         return NextResponse.json(
             { message: "Internal server error!", error: error.message },
             { status: 500 }

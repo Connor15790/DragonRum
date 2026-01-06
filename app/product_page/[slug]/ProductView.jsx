@@ -18,7 +18,7 @@ export default function ProductView({ product }) {
 
     const handleAddtoCart = async () => {
         const cartItemData = {
-            productId: product._idedfd,
+            productId: product._id,
             name: product.title,
             price: product.price,
             image: product.img,
