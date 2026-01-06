@@ -101,17 +101,21 @@ export async function PUT(req) {
         }
 
         const { productId, quantity } = await req.json();
+        const delta = parseInt(quantity, 10);
 
         const userCart = await Cart.findOne({ userId });
 
         const itemIndex = userCart.items.findIndex(item => item.productId.toString() === productId);
 
-        console.log("USER:", userId);
-        console.log("PRODUCT:", productId);
-        console.log("CART ITEMS:", userCart?.items);
-        console.log("ITEM INDEX:", itemIndex);
+        if (itemIndex === -1) {
+            return NextResponse.json({ message: "Item not in cart" }, { status: 400 });
+        }
 
-        userCart.items[itemIndex].quantity += parseInt(quantity);
+        if (userCart.items[itemIndex].quantity + delta <= 0) {
+            userCart.items.splice(itemIndex, 1);
+        } else {
+            userCart.items[itemIndex].quantity += delta;
+        }
 
         await userCart.save();
 
