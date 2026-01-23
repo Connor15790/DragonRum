@@ -2,6 +2,8 @@
 
 import React, { Fragment } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart, setCartOpen } from '@/redux/CartSlice/cartSlice';
 
@@ -13,14 +15,20 @@ import Spinner from '../Spinner';
 
 const CartDrawer = ({ open, setOpen }) => {
     const dispatch = useDispatch();
+    const router = useRouter();
 
     const { items, cartLoadingFetch, cartErrorFetch, isCartOpen } = useSelector((state) => state.cart);
 
     const closeDrawer = () => dispatch(setCartOpen(false));
 
     const handleClearCart = async () => {
-        await dispatch(clearCart());
+        dispatch(clearCart());
     }
+
+    const handleNavigateToCheckout = () => {
+        dispatch(setCartOpen(false));
+        router.push('/checkout_page');
+    };
 
     return (
         <Transition show={isCartOpen} as={Fragment}>
@@ -111,6 +119,7 @@ const CartDrawer = ({ open, setOpen }) => {
                                             </button>
                                             <button
                                                 type="button"
+                                                onClick={handleNavigateToCheckout}
                                                 className="ml-4 inline-flex justify-center cursor-pointer rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-red-600"
                                             >
                                                 Checkout
