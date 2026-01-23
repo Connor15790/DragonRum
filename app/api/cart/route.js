@@ -128,3 +128,23 @@ export async function PUT(req) {
         );
     }
 }
+
+export async function DELETE(req) {
+    try {
+        await dbConnect();
+        const userId = await getUserId();
+
+        if (!userId) {
+            return NextResponse.json(
+                { message: "Unauthorized!" },
+                { status: 401 }
+            );
+        }
+
+        await Cart.findOneAndDelete({ userId });
+
+        return NextResponse.json({ message: "Cart cleared successfully!" });
+    } catch (error) {
+        return NextResponse.json({ message: "Internal server error!", error: error.message }, { status: 500 });
+    }
+}

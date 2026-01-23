@@ -3,7 +3,7 @@
 import React, { Fragment } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setCartOpen } from '@/redux/CartSlice/cartSlice';
+import { clearCart, setCartOpen } from '@/redux/CartSlice/cartSlice';
 
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline'
@@ -17,6 +17,10 @@ const CartDrawer = ({ open, setOpen }) => {
     const { items, cartLoadingFetch, cartErrorFetch, isCartOpen } = useSelector((state) => state.cart);
 
     const closeDrawer = () => dispatch(setCartOpen(false));
+
+    const handleClearCart = async () => {
+        await dispatch(clearCart());
+    }
 
     return (
         <Transition show={isCartOpen} as={Fragment}>
@@ -101,7 +105,7 @@ const CartDrawer = ({ open, setOpen }) => {
                                             <button
                                                 type="button"
                                                 className="rounded-md cursor-pointer bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                onClick={() => setOpen(false)}
+                                                onClick={handleClearCart}
                                             >
                                                 Clear Cart
                                             </button>

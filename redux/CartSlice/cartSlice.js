@@ -37,6 +37,18 @@ export const updateCart = createAsyncThunk("product/updateCart", async ({ produc
     }
 })
 
+export const clearCart = createAsyncThunk("product/clearCart", async (_, thunkAPI) => {
+    try {
+        const response = await axios.delete("/api/cart");
+
+        return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(
+            error.response?.data?.message || "Clearing cart failed!"
+        );
+    }
+})
+
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
@@ -53,7 +65,11 @@ const cartSlice = createSlice({
 
         // Update/Remove States
         cartLoadingUpdate: false,
-        cartErrorUpdate: null
+        cartErrorUpdate: null,
+
+        // Clear States
+        cartLoadingClear: false,
+        cartErrorClear: null,
     },
     reducers: {
         setCartOpen: (state, action) => {
@@ -109,6 +125,21 @@ const cartSlice = createSlice({
             .addCase(updateCart.rejected, (state, action) => {
                 state.cartLoadingUpdate = false;
                 state.cartErrorUpdate = action.payload;
+            })
+
+            // Clear cart
+            .addCase(clearCart.pending, (state) => {
+                state.cartLoadingClear = true;
+                state.cartErrorClear = null;
+            })
+            .addCase(clearCart.fulfilled, (state) => {
+                state.cartLoadingClear = false;
+                state.items = [];
+                state.totalPrice = 0;
+            })
+            .addCase(clearCart.rejected, (state, action) => {
+                state.cartLoadingClear = false;
+                state.cartErrorClear = action.payload;
             })
     }
 })
