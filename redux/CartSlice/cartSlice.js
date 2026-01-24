@@ -56,7 +56,7 @@ const cartSlice = createSlice({
         totalPrice: 0,
         isCartOpen: false,
         // Fetch States
-        cartLoadingFetch: false,
+        cartLoadingFetch: true,
         cartErrorFetch: null,
 
         // Add States
