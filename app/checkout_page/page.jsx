@@ -33,6 +33,27 @@ const CheckoutPage = () => {
         }
     }
 
+    const handlePayment = async () => {
+        try {
+            const res = await fetch("/api/stripe/checkout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ items })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || "Checkout failed");
+            }
+
+            window.location.href = data.url;
+        } catch (error) {
+            console.error(error);
+            toast.error("Payment failed. Please try again.");
+        }
+    }
+
     return (
         <div className="w-full flex justify-center px-4 sm:px-8 lg:px-16 py-6 sm:py-10">
             <div className="bg-white/10 rounded-lg w-full max-w-7xl px-4 sm:px-8 lg:px-16 py-6 flex flex-col lg:flex-row gap-8">
@@ -81,6 +102,7 @@ const CheckoutPage = () => {
                             Country <span className="text-red-500">*</span>
                         </p>
                         <Select
+                            value={selectedCountry}
                             options={Country.getAllCountries()}
                             getOptionLabel={(c) => c.name}
                             getOptionValue={(c) => c.isoCode}
@@ -97,6 +119,7 @@ const CheckoutPage = () => {
                         <div className="flex flex-col gap-2">
                             <label className="text-sm font-semibold">State</label>
                             <Select
+                                value={selectedState}
                                 options={
                                     selectedCountry
                                         ? State.getStatesOfCountry(selectedCountry.isoCode)
@@ -114,6 +137,7 @@ const CheckoutPage = () => {
                         <div className="flex flex-col gap-2">
                             <label className="text-sm font-semibold">City</label>
                             <Select
+                                value={selectedCity}
                                 options={
                                     selectedCountry && selectedState
                                         ? City.getCitiesOfState(
@@ -163,7 +187,7 @@ const CheckoutPage = () => {
                     <div className="w-full flex flex-col">
                         <p className="font-semibold text-xl mb-4">Order Summary</p>
 
-                        <div className="flex flex-col gap-4 max-h-[260px] overflow-y-auto pr-1">
+                        <div className="flex flex-col gap-4 max-h-[260px] overflow-y-auto pr-3">
                             {items.map((item, index) => (
                                 <div key={index} className="flex gap-4 items-center">
                                     <div className="relative w-16 h-16 bg-white rounded-md p-1 shrink-0">
@@ -225,7 +249,7 @@ const CheckoutPage = () => {
                             </div>
                         </div>
 
-                        <button className="w-full mt-6 bg-red-500 hover:bg-red-600 transition-colors py-3 rounded-md font-semibold">
+                        <button onClick={handlePayment} className="w-full mt-6 bg-red-500 hover:bg-red-600 transition-colors py-3 rounded-md font-semibold">
                             Pay Now
                         </button>
 

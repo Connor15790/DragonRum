@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addtoCart } from "@/redux/CartSlice/cartSlice";
@@ -13,7 +14,9 @@ import Spinner from "@/components/Spinner";
 
 export default function ProductView({ product }) {
     const dispatch = useDispatch();
+    const router = useRouter();
 
+    const { user } = useSelector((state) => state.auth);
     const { cartLoadingAdd, cartErrorAdd } = useSelector((state) => state.cart);
 
     const handleAddtoCart = async () => {
@@ -26,9 +29,13 @@ export default function ProductView({ product }) {
         };
 
         try {
-            await dispatch(addtoCart(cartItemData)).unwrap();
+            if (user) {
+                await dispatch(addtoCart(cartItemData)).unwrap();
 
-            dispatch(setCartOpen(true));
+                dispatch(setCartOpen(true));
+            } else {
+                router.push("/login");
+            }
         } catch (error) {
             console.error("Failed to add to cart:", error);
             toast.error("Error saving to cart!");
