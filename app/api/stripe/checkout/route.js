@@ -1,10 +1,28 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
+import dbConnect from "@/lib/mongodb";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+async function getUserId() {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    if (!token) return null;
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        return decoded.id;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function POST(req) {
     try {
+        await dbConnect();
+        const userId = await getUserId();
+
         const { items } = await req.json();
 
         if (!items || items.length === 0) {
@@ -16,6 +34,9 @@ export async function POST(req) {
 
         const session = await stripe.checkout.sessions.create({
             mode: "payment",
+            metadata: {
+                userId: userId,
+            },
             payment_method_types: ["card"],
             line_items: items.map(item => ({
                 price_data: {
