@@ -1,6 +1,10 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+
+export const dynamic = "force-dynamic";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 

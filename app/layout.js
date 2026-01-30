@@ -1,19 +1,22 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from 'next/font/google';
+// import { Geist, Geist_Mono } from 'next/font/google';
 import "./globals.css";
 import Navbar from "@/components/navigation/Navbar";
 import Providers from "@/redux/providers";
 import CartDrawer from "@/components/cart/CartDrawer";
 import ToastProvider from "./providers/ToastProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: "Create Next App",
@@ -24,7 +27,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`w-full pt-16 ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`w-full pt-16 ${inter.className} antialiased`}
       >
         <Providers>
           <Navbar />
