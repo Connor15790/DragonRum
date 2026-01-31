@@ -5,6 +5,16 @@ import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export function middleware(request) {
+    const pathname = request.nextUrl.pathname;
+
+    // Allow public APIs
+    if (
+        pathname.startsWith(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product`) ||
+        pathname.startsWith(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`)
+    ) {
+        return NextResponse.next();
+    }
+
     const token = request.headers.get("auth-token");
 
     if (!token) {
