@@ -3,7 +3,7 @@ import ProductView from "./ProductView";
 
 async function getProduct(slug) {
     const res = await fetch(
-        `/api/product/get-one-product?slug=${slug}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/get-one-product?slug=${slug}`,
         { cache: "no-store" }
     );
 

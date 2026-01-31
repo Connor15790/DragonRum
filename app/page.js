@@ -1,7 +1,7 @@
 import DrinkStack from "@/components/DrinkStack";
 
 async function getProducts() {
-	const res = await fetch("/api/product/get-products", {
+	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/get-products`, {
 		cache: "no-store"
 	})
 
