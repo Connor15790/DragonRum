@@ -9,8 +9,8 @@ export function middleware(request) {
 
     // Allow public APIs
     if (
-        pathname.startsWith(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product`) ||
-        pathname.startsWith(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`)
+        pathname.startsWith(`/api/product`) ||
+        pathname.startsWith(`/api/auth`)
     ) {
         return NextResponse.next();
     }
