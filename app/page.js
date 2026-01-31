@@ -1,9 +1,9 @@
 import DrinkStack from "@/components/DrinkStack";
 
 async function getProducts() {
-	const res = await fetch("http://localhost:3000/api/product/get-products", {
-		cache: "no-store",
-	});
+	const res = await fetch("/api/product/get-products", {
+		cache: "no-store"
+	})
 
 	if (!res.ok) throw new Error("Failed to fetch products");
 
@@ -189,7 +189,7 @@ export default async function Home() {
 					<p className="text-2xl md:text-3xl lg:text-4xl font-serif">Rums</p>
 				</div>
 
-				<div className="flex w-[320] p-10 h-[250px] md:w-[600px] md:h-[400px] lg:w-[800px] lg:h-[500px] relative justify-center items-center py-3 overflow-hidden">
+				<div className="flex w-[320] p-10 h-62.5 md:w-150 md:h-100 lg:w-200 lg:h-125 relative justify-center items-center py-3 overflow-hidden">
 					<DrinkStack
 						cardsData={rumStackData}
 					/>
@@ -199,7 +199,7 @@ export default async function Home() {
 					<p className="text-2xl md:text-3xl lg:text-4xl font-serif">Whiskeys</p>
 				</div>
 
-				<div className="flex w-[320] p-10 h-[250px] md:w-[600px] md:h-[400px] lg:w-[800px] lg:h-[500px] relative justify-center items-center py-3 overflow-hidden">
+				<div className="flex w-[320] p-10 h-62.5 md:w-150 md:h-100 lg:w-200 lg:h-125 relative justify-center items-center py-3 overflow-hidden">
 					<DrinkStack
 						cardsData={whiskeyStackData}
 					/>
@@ -209,7 +209,7 @@ export default async function Home() {
 					<p className="text-2xl md:text-3xl lg:text-4xl font-serif">Wines</p>
 				</div>
 
-				<div className="flex w-[320] p-10 h-[250px] md:w-[600px] md:h-[400px] lg:w-[800px] lg:h-[500px] relative justify-center items-center py-3 overflow-hidden">
+				<div className="flex w-[320] p-10 h-62.5 md:w-150 md:h-100 lg:w-200 lg:h-125 relative justify-center items-center py-3 overflow-hidden">
 					<DrinkStack
 						cardsData={wineStackData}
 					/>

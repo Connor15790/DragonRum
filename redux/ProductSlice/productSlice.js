@@ -6,9 +6,9 @@ export const fetchProducts = createAsyncThunk("product/fetchProducts", async ({ 
         let response;
 
         if (category) {
-            response = await axios.get(`http://localhost:3000/api/product/get-products?category=${category}`);
+            response = await axios.get(`/api/product/get-products?category=${category}`);
         } else {
-            response = await axios.get(`http://localhost:3000/api/product/get-products`);
+            response = await axios.get(`/api/product/get-products`);
         }
 
         return response.data.products;
